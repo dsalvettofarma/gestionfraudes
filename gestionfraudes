@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Fraude</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 500px; margin: auto; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, textarea, button { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; }
+    button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #45a049; }
+    .mensaje { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Formulario de Registro de Fraude</h2>
+  <form id="fraudeForm">
+    <label for="documento">Documento</label>
+    <input type="text" id="documento" name="documento" required>
+
+    <label for="correo">Correo</label>
+    <input type="email" id="correo" name="correo" required>
+
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" required>
+
+    <label for="apellido">Apellido</label>
+    <input type="text" id="apellido" name="apellido" required>
+
+    <label for="comentarios">Comentarios (opcional)</label>
+    <textarea id="comentarios" name="comentarios"></textarea>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <div class="mensaje" id="mensaje"></div>
+
+  <script>
+    document.getElementById("fraudeForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const data = {
+        documento: document.getElementById("documento").value,
+        correo: document.getElementById("correo").value,
+        nombre: document.getElementById("nombre").value,
+        apellido: document.getElementById("apellido").value,
+        comentarios: document.getElementById("comentarios").value
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbzAuL_pqV1fLaREoU26eidMT0ThplVt-DA0X5B4ZsaV0MDs8VB2eNbXwf34aEdv7ZY_/exec", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(response => response.json())
+      .then(result => {
+        document.getElementById("mensaje").textContent = "Formulario enviado correctamente.";
+        document.getElementById("fraudeForm").reset();
+      })
+      .catch(error => {
+        document.getElementById("mensaje").textContent = "Hubo un error al enviar el formulario.";
+        console.error("Error:", error);
+      });
+    });
+  </script>
+</body>
+</html>
