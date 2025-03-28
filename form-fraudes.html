@@ -2,68 +2,121 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Registro de Fraude</title>
+  <title>Registro de Fraude | Farmashop</title>
+  <link rel="icon" href="https://tiendacdn.farmashop.com.uy/media/favicon/stores/1/logo.png" type="image/x-icon">
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 500px; margin: auto; }
-    label { display: block; margin-top: 15px; font-weight: bold; }
-    input, textarea, button { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; }
-    button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
-    button:hover { background-color: #45a049; }
-    .mensaje { margin-top: 20px; font-weight: bold; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 720px;
+      background: #e8f8ff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin: 40px auto;
+      position: relative;
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 340px;
+    }
+    h2 {
+      text-align: center;
+      color: #003366;
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #003366;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #014694;
+      color: white;
+      border: none;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #001c43;
+    }
+    .mensaje {
+      margin-top: 20px;
+      font-weight: bold;
+      text-align: center;
+      color: green;
+      display: none;
+    }
+    iframe {
+      display: none;
+    }
+    .ver-tabla {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #d9eaff;
+      border: 1px solid #014694;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #014694;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+    .ver-tabla:hover {
+      background-color: #c2dbf0;
+    }
   </style>
+  <script>
+    function mostrarMensaje() {
+      document.getElementById('mensaje').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('mensaje').style.display = 'none';
+      }, 5000);
+    }
+  </script>
 </head>
 <body>
-  <h2>Formulario de Registro de Fraude</h2>
-  <form id="fraudeForm">
-    <label for="documento">Documento</label>
-    <input type="text" id="documento" name="documento" required>
+  <div class="container">
+    <a class="ver-tabla" href="https://docs.google.com/spreadsheets/d/12mgWvEzfvBi6eYqDmY_Jmpdb00lp4r1FWvERuVhM7gY/edit?usp=sharing" target="_blank">Ver tabla</a>
+    <img src="https://tiendacdn.farmashop.com.uy/static/version1742495387/frontend/Geocom/farmashopv2/es_ES/images/logo.svg" alt="Farmashop" class="logo">
+    <h2>Formulario de Registro de Fraude</h2>
 
-    <label for="correo">Correo</label>
-    <input type="email" id="correo" name="correo" required>
+    <form action="https://script.google.com/macros/s/AKfycbxmqWUqa5cCttXXLAuzEWm5tHwOfbIrKDCFsJgrpQGOmszuUGn77DFLNgMion7CCcKs/exec" method="POST" target="hidden_iframe" onsubmit="mostrarMensaje(); setTimeout(() => this.reset(), 500);">
+      <label for="documento">Documento</label>
+      <input type="text" id="documento" name="documento" required>
 
-    <label for="nombre">Nombre</label>
-    <input type="text" id="nombre" name="nombre" required>
+      <label for="correo">Correo</label>
+      <input type="email" id="correo" name="correo" required>
 
-    <label for="apellido">Apellido</label>
-    <input type="text" id="apellido" name="apellido" required>
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" name="nombre" required>
 
-    <label for="comentarios">Comentarios (opcional)</label>
-    <textarea id="comentarios" name="comentarios"></textarea>
+      <label for="apellido">Apellido</label>
+      <input type="text" id="apellido" name="apellido" required>
 
-    <button type="submit">Enviar</button>
-  </form>
+      <label for="comentarios">Comentarios (opcional)</label>
+      <textarea id="comentarios" name="comentarios"></textarea>
 
-  <div class="mensaje" id="mensaje"></div>
+      <button type="submit">Enviar</button>
+    </form>
 
-  <script>
-    document.getElementById("fraudeForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const data = {
-        documento: document.getElementById("documento").value,
-        correo: document.getElementById("correo").value,
-        nombre: document.getElementById("nombre").value,
-        apellido: document.getElementById("apellido").value,
-        comentarios: document.getElementById("comentarios").value
-      };
-
-      fetch("https://script.google.com/macros/s/AKfycbzAuL_pqV1fLaREoU26eidMT0ThplVt-DA0X5B4ZsaV0MDs8VB2eNbXwf34aEdv7ZY_/exec", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      .then(response => response.json())
-      .then(result => {
-        document.getElementById("mensaje").textContent = "Formulario enviado correctamente.";
-        document.getElementById("fraudeForm").reset();
-      })
-      .catch(error => {
-        document.getElementById("mensaje").textContent = "Hubo un error al enviar el formulario.";
-        console.error("Error:", error);
-      });
-    });
-  </script>
+    <div class="mensaje" id="mensaje">✅ ¡Reporte enviado con éxito!</div>
+    <iframe name="hidden_iframe"></iframe>
+  </div>
 </body>
 </html>
